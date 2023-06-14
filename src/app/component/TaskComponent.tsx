@@ -1,28 +1,61 @@
 "use client";
 
+// import { useState } from "react";
+import { useState } from "react";
 import { Alert } from "flowbite-react";
 
-export const TaskComponent = ({ title, completed }) => {
+export const TaskComponent = ({ id, title, completed, onDismiss }) => {
+  const [deleted, setDeleted] = useState(false);
+  const [taskCompleted, setTaskCompleted] = useState(completed);
+
+  const deleteTask = () => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      setDeleted(true);
+    }
+  };
+
+  const markCompleted = () => {
+    setTaskCompleted(true);
+  };
+
+  if (deleted) {
+    return null;
+  }
+
   return (
     <Alert
-      color={completed ? "success" : "failure"}
-      onDismiss={function onDismiss() {
-        return alert("Alert dismissed!");
-      }}
+      color={taskCompleted ? "success" : "failure"}
+      onDismiss={onDismiss || deleteTask}
       additionalContent={
         <>
           <div
             className={
-              "mt -2 mb-4 text-sm" + completed
+              "mt-2 mb-4 text-sm " + taskCompleted
                 ? "text-green-700 dark:text-green-800"
                 : "text-red-700 dark:text-red-800"
             }
           >
-            Addition information about the alert.
+            More info about this info alert goes here. This example text is
+            going to run a bit longer so that you can see how spacing within an
+            alert works with this kind of content.
           </div>
-          <div className="flex">
-            <button type="button">show more</button>
-            <button type="button">clear</button>
+          <div className="flex gap-2 m-0 text-xl">
+            {!taskCompleted && (
+              <button
+                type="button"
+                className="bg-green-900 text-white"
+                onClick={markCompleted}
+              >
+                Mark Completed
+              </button>
+            )}
+            <button
+              type="button"
+              className="text-white bg-red-600"
+              onClick={deleteTask}
+            >
+              Delete
+            </button>
           </div>
         </>
       }
@@ -30,8 +63,8 @@ export const TaskComponent = ({ title, completed }) => {
     >
       <span>
         <span className="font-medium">
-          {"Completed : " + completed.toString()}
-        </span>
+          {"Completed: " + taskCompleted.toString()}
+        </span>{" "}
         <br />
         {title}
       </span>

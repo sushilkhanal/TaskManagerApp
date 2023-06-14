@@ -1,13 +1,12 @@
-import { FormComponent } from "../component/FormComponent";
+import React from "react";
 
 export default function Layout({ children }) {
   return (
-    <html>
-      <body>
-        <h1>Todo App</h1>
-        <FormComponent />
-        {children}
-      </body>
-    </html>
+    <>
+      <h1 className="text-White-800 text-3xl">
+        Todo Application Using Next.JS
+      </h1>
+      {children}
+    </>
   );
 }
